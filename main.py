@@ -1,16 +1,21 @@
-import pandas as pd 
-from sklearn.model_selection import KFold
-X_train = pd.read_csv('drugsComTrain_raw.csv', usecols=['drugName', 'condition', 'usefulCount'])
-X_test = pd.read_csv('drugsComTest_raw.csv', usecols=['drugName', 'condition', 'usefulCount'])
+import pandas as pd
+dt_Train = pd.read_csv('drugsComTestProcessed.csv')
+dt_Test = pd.read_csv('drugsComTrainProcessed.csv')
+dt_Test[1:5]
+dt_Train[1:5]
+x_train = dt_Train[['Id', 'vaderReviewScore']]
+y_train = dt_Train[['ratingSentimentLabel']]
 
-Y_train = pd.read_csv('drugsComTrain_raw.csv', usecols=['rating'])
-Y_test = pd.read_csv('drugsComTest_raw.csv', usecols=['rating'])
+x_test = dt_Test[['Id', 'vaderReviewScore']]
+y_test = dt_Test[['ratingSentimentLabel']]
 
+y_train[1:5]
+y_test[1:5]
 from sklearn.tree import DecisionTreeClassifier
-duy = DecisionTreeClassifier()
-duy.fit(X_train, Y_train)
+clf_gini = DecisionTreeClassifier(random_state=0)
+clf_gini.fit(x_train, y_train)
 
-Y_pred = duy.predict(X_test)
+y_pred = clf_gini.predict(x_test)
 
 from sklearn.metrics import accuracy_score
-print accuracy_score(Y_test, Y_pred)*100
+print "Accuracy score: %3.2f" %(accuracy_score(y_test, y_pred)*100)
