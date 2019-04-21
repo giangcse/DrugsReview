@@ -8,8 +8,8 @@ dt_Train.columns = ['Id','drugName','condition','review','rating','date','useful
 from nltk.corpus import stopwords
 stopwords = stopwords.words('english')
 
-dt_Train = dt_Train[0:100]
-dt_Test = dt_Test[0:100]
+# dt_Train = dt_Train[0:100]
+# dt_Test = dt_Test[0:100]
 
 dt_Train['cleanReview'] = dt_Train['review'].apply(lambda x: ' '.join([
                                                 item for item in x.split() 
